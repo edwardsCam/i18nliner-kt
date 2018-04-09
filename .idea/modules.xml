@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/i18nliner-kt.iml" filepath="$PROJECT_DIR$/i18nliner-kt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/i18nliner-kt_main.iml" filepath="$PROJECT_DIR$/.idea/modules/i18nliner-kt_main.iml" group="i18nliner-kt" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/i18nliner-kt_test.iml" filepath="$PROJECT_DIR$/.idea/modules/i18nliner-kt_test.iml" group="i18nliner-kt" />
+    </modules>
+  </component>
+</project>
