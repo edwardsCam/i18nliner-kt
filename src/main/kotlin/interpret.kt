@@ -1,4 +1,7 @@
-fun interpret(msg: String, args: HashMap<String, Any>): String = (
+fun interpret(
+  msg: String,
+  args: HashMap<String, Any> = hashMapOf()
+): String = (
   parseVariables(msg).fold(msg) { result, variable ->
     if (args.containsKey(variable)) {
       result.replace(

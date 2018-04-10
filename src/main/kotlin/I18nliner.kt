@@ -13,6 +13,9 @@ object I18nliner {
     _locale = locale
   }
 
+  fun getPath(): String = _path
+  fun getLocale(): String = _locale
+
   fun t(
     msg: String,
     args: HashMap<String, Any> = hashMapOf()
@@ -22,12 +25,11 @@ object I18nliner {
       return msg
     }
 
+    val translationFilePath = getTranslationPath(_path, _locale)
     val translations = try {
-      File(
-        getTranslationPath(_path, _locale)
-      ).readLines()
+      File(translationFilePath).readLines()
     } catch (e: FileNotFoundException) {
-      warn("No translation file found for $_locale")
+      warn("No translation file found for $_locale! (looking for $translationFilePath)")
       null
     } ?: return msg
 
@@ -37,7 +39,7 @@ object I18nliner {
       .find { it[0] == key }
 
     if (translatedKeyValue == null) {
-      warn("Did not find a translation for $msg (key: $key)")
+      warn("Did not find a translation for \"$msg\"! (key: $key)")
       return msg
     }
     return interpret(translatedKeyValue[1], args)

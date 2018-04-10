@@ -124,3 +124,6 @@ fun main(args: Array<String>) {
 ### Intellij
 1. Import Project
 2. Check `Import project from external model` and select Gradle
+
+### Testing
+`gradle test`
