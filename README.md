@@ -79,13 +79,13 @@ I18nliner.t(
 in `resources/translations/messages_en_US.properties`:
 ```
 inertia_is_a_property_of_matter=Inertia is a property of matter!
-the_name_is_lastname.firstname_lastname=The name is { lastName }. { firstName } { lastName }
+the_name_is_lastname_firstname_lastname=The name is { lastName }. { firstName } { lastName }
 ```
 
 in `resources/translations/messages_pt_BR.properties`:
 ```
 inertia_is_a_property_of_matter=A inércia é uma propriedade da matéria!
-the_name_is_lastname.firstname_lastname=Meu nome é { lastName }. { firstName } { lastName }.
+the_name_is_lastname_firstname_lastname=Meu nome é { lastName }. { firstName } { lastName }.
 ```
 
 in `main.kt`:
