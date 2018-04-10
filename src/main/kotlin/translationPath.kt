@@ -1,5 +1,3 @@
-package main
-
 fun getTranslationPath(base: String, locale: String): String {
   if (base.endsWith('/')) {
     return String.format("%smessages_%s.properties", base, locale)

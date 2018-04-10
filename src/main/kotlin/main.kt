@@ -1,13 +1,19 @@
-import main.I18nliner
-
 fun main(args: Array<String>) {
   I18nliner.setPath("src/main/resources/")
 
-  println(I18nliner.t("I am only but a test"))
-  println(I18nliner.t("I have no translations"))
-
-  println()
-
+  testPrint()
   I18nliner.setLocale("pt_BR")
-  println(I18nliner.t("I am only but a test")) // Eu sou apenas um teste
+  testPrint()
+}
+
+fun testPrint() {
+  println(
+    I18nliner.t(
+      "The name is { lastName }. { firstName } { lastName }.",
+      hashMapOf(
+        "firstName" to "James",
+        "lastName" to "Bond"
+      )
+    )
+  )
 }

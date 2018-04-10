@@ -1,5 +1,3 @@
-package main
-
 import java.io.File
 
 object I18nliner {
@@ -14,26 +12,20 @@ object I18nliner {
     _locale = locale
   }
 
-  fun t(msg: String): String? {
+  fun t(msg: String, args: HashMap<String, Any> = hashMapOf()): String? {
     if (_path.isEmpty()) {
-      println("Translation file not found! You may need to call setPath to set the location of your translation files.")
+      println("I18nliner-kt: Translation file not found! You may need to call setPath to set the location of your translation files.")
       return msg
     }
     val translationPath = getTranslationPath(_path, _locale)
     val key = generateKey(msg)
-    val translated = File(translationPath)
-      .readLines()
+    val translated = File(translationPath).readLines()
       .map { it.split('=', limit = 2)}
       .find { it[0] == key }
     if (translated == null) {
-      println("Did not find a translation for $msg (key: $key)")
+      println("I18nliner-kt: Did not find a translation for $msg (key: $key)")
       return msg
     }
-    return interpret(translated[1])
-  }
-
-  private fun interpret(sentence: String): String {
-    // TODO interpolated variables
-    return sentence
+    return interpret(translated[1], args)
   }
 }
