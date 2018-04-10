@@ -1,9 +1,9 @@
-fun generateKey(pattern: String): String {
-  // TODO handle special characters, encoding, variables
-  return pattern
+// TODO handle special characters, encoding, variables
+fun generateKey(pattern: String): String  = (
+  pattern
     .replace("{", "")
     .replace("}", "")
     .trim()
     .replace("\\s+".toRegex(), "_")
     .toLowerCase()
-}
+)

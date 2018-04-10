@@ -12,7 +12,10 @@ object I18nliner {
     _locale = locale
   }
 
-  fun t(msg: String, args: HashMap<String, Any> = hashMapOf()): String? {
+  fun t(
+    msg: String,
+    args: HashMap<String, Any> = hashMapOf()
+  ): String {
     if (_path.isEmpty()) {
       println("I18nliner-kt: Translation file not found! You may need to call setPath to set the location of your translation files.")
       return msg

@@ -11,7 +11,7 @@ fun testPrint() {
     I18nliner.t(
       "The name is { lastName }. { firstName } { lastName }.",
       hashMapOf(
-        "firstName" to "James",
+        "firstName" to I18nliner.t("James"),
         "lastName" to "Bond"
       )
     )

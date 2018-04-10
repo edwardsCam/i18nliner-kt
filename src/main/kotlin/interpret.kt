@@ -1,4 +1,4 @@
-fun interpret(msg: String, args: HashMap<String, Any>): String =
+fun interpret(msg: String, args: HashMap<String, Any>): String = (
   parseVariables(msg).fold(msg) { result, variable ->
     if (args.containsKey(variable)) {
       result.replace(
@@ -10,5 +10,6 @@ fun interpret(msg: String, args: HashMap<String, Any>): String =
       result
     }
   }
+)
 
 private fun regex(variable: String): Regex = "\\{\\s*$variable\\s*}".toRegex()
