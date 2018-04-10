@@ -6,7 +6,7 @@ fun interpret(msg: String, args: HashMap<String, Any>): String = (
         args[variable].toString()
       )
     } else {
-      println("I18nliner-kt: Missing a value for $variable")
+      warn("Missing a value for $variable")
       result
     }
   }

@@ -17,16 +17,16 @@ object I18nliner {
     args: HashMap<String, Any> = hashMapOf()
   ): String {
     if (_path.isEmpty()) {
-      println("I18nliner-kt: Translation file not found! You may need to call setPath to set the location of your translation files.")
+      warn("Translation file not found! You may need to call setPath to set the location of your translation files.")
       return msg
     }
-    val translationPath = getTranslationPath(_path, _locale)
     val key = generateKey(msg)
+    val translationPath = getTranslationPath(_path, _locale)
     val translated = File(translationPath).readLines()
       .map { it.split('=', limit = 2)}
       .find { it[0] == key }
     if (translated == null) {
-      println("I18nliner-kt: Did not find a translation for $msg (key: $key)")
+      warn("Did not find a translation for $msg (key: $key)")
       return msg
     }
     return interpret(translated[1], args)
