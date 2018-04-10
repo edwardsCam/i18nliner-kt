@@ -1,4 +1,5 @@
 import java.io.File
+import java.io.FileNotFoundException
 
 object I18nliner {
   private var _path = ""
@@ -20,15 +21,25 @@ object I18nliner {
       warn("Translation file not found! You may need to call setPath to set the location of your translation files.")
       return msg
     }
+
+    val translations = try {
+      File(
+        getTranslationPath(_path, _locale)
+      ).readLines()
+    } catch (e: FileNotFoundException) {
+      warn("No translation file found for $_locale")
+      null
+    } ?: return msg
+
     val key = generateKey(msg)
-    val translationPath = getTranslationPath(_path, _locale)
-    val translated = File(translationPath).readLines()
+    val translatedKeyValue = translations
       .map { it.split('=', limit = 2)}
       .find { it[0] == key }
-    if (translated == null) {
+
+    if (translatedKeyValue == null) {
       warn("Did not find a translation for $msg (key: $key)")
       return msg
     }
-    return interpret(translated[1], args)
+    return interpret(translatedKeyValue[1], args)
   }
 }
