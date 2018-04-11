@@ -5,10 +5,13 @@ _I18n made simple - for Kotlin!_
 ---
 
 ## Key Features
-* No more manual management of english translation files
-(or whatever your default development language is)
+* (Coming soon!) Auto-generation of your default translation file (en_US by default).
+No more manual management of your english translation file
+(or whatever your team's lingua franca is).
 * Use human language strings in your code - no more referencing
-internationalized strings by their keys in the language file
+internationalized strings by their key in the translation file.
+* (Coming soon!) Support for pluralization constructs.
+* (Coming soon!) Support for variable formats (date, number, currency, etc).
 
 ---
 
@@ -91,7 +94,7 @@ the_name_is_lastname_firstname_lastname=Meu nome é { lastName }. { firstName } 
 in `main.kt`:
 ```kotlin
 fun main(args: Array<String>) {
-  I18nliner.setPath("resources/translations/")
+  I18nliner.setPath("resources/translations/") // or wherever your translation files live
 
   println(
     I18nliner.t("Inertia is a property of matter!") // Inertia is a property of matter!
