@@ -1,6 +1,3 @@
-import java.io.File
-import java.io.FileNotFoundException
-
 object I18nliner {
   private var _path = ""
   private var _locale = "en_US"
@@ -25,24 +22,14 @@ object I18nliner {
       return msg
     }
 
-    val translationFilePath = getTranslationPath(_path, _locale)
-    val translations = try {
-      File(translationFilePath).readLines()
-    } catch (e: FileNotFoundException) {
-      warn("No translation file found for $_locale! (looking for $translationFilePath)")
-      null
-    } ?: return msg
-
+    val translations = getTranslations(_path, _locale) ?: return msg
     val key = generateKey(msg)
-    val translatedKeyValue = translations
-      .map { it.split('=', limit = 2)}
-      .find { it[0] == key }
-
-    if (translatedKeyValue == null) {
+    val translation = translations[key]
+    if (translation == null) {
       warn("Did not find a translation for \"$msg\"! (key: $key)")
       return msg
     }
-    return interpret(translatedKeyValue[1], args)
+    return interpret(translation, args)
   }
 
   fun t(args: HashMap<String, Any>): String {
