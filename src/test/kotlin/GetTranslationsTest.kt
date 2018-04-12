@@ -6,8 +6,8 @@ class GetTranslationsTest {
 
   @Test
   fun `gets the translations for a given path and locale`() {
-    val fileLines = File("src/main/resources/messages_pt_BR.properties").readLines()
-    val translations = getTranslations("src/main/resources", "pt_BR")!!
+    val fileLines = File("src/test/resources/messages_pt_BR.properties").readLines()
+    val translations = getTranslations("src/test/resources", "pt_BR")!!
     fileLines.forEach { line ->
       val key = line.split('=')[0]
       val translation = translations[key]
@@ -21,7 +21,7 @@ class GetTranslationsTest {
   @Test
   fun `returns null if no translation file is found`() {
     assertNull(
-      getTranslations("src/main/resources", "qw_ERTY")
+      getTranslations("src/test/resources", "qw_ERTY")
     )
   }
 }

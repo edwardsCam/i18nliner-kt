@@ -7,7 +7,7 @@ class I18nlinerTest {
 
   @Before
   fun reset() {
-    I18nliner.setPath("src/main/resources")
+    I18nliner.setPath("src/test/resources")
     I18nliner.setLocale("en_US")
   }
 
@@ -18,10 +18,10 @@ class I18nlinerTest {
       I18nliner.getPath(),
       ""
     )
-    I18nliner.setPath("src/main/resources")
+    I18nliner.setPath("src/test/resources")
     assertEquals(
       I18nliner.getPath(),
-      "src/main/resources"
+      "src/test/resources"
     )
   }
 
