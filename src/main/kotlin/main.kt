@@ -1,18 +1,23 @@
 fun main(args: Array<String>) {
   I18nliner.setPath("src/main/resources/")
 
-  testPrint()
   I18nliner.setLocale("pt_BR")
-  testPrint()
-}
-
-fun testPrint() {
   println(
     I18nliner.t(
-      "The name is { lastName }. { firstName } { lastName }.",
       hashMapOf(
-        "firstName" to I18nliner.t("James"),
-        "lastName" to "Bond"
+        "one" to "There is one light!",
+        "plural" to "There are { count } lights!",
+        "count" to 1
+      )
+    )
+  )
+
+  println(
+    I18nliner.t(
+      hashMapOf(
+        "one" to "There is one light!",
+        "plural" to "There are { count } lights!",
+        "count" to 42
       )
     )
   )

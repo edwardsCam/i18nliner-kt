@@ -10,7 +10,7 @@ No more manual management of your english translation file
 (or whatever your team's lingua franca is).
 * Use human language strings in your code - no more referencing
 internationalized strings by their key in the translation file.
-* (Coming soon!) Support for pluralization constructs.
+* Support for pluralization constructs.
 * (Coming soon!) Support for variable formats (date, number, currency, etc).
 
 ---
@@ -24,9 +24,22 @@ knows where to find your translations.
     their profile set to `pt_BR` logs in),
     you will need to call `setLocale()` with the new locale, so that all
     subsequent calls to `t()` will reflect the correct language.
-3. When developing, call `I18nliner.t("A string to be translated!")` instead of
-the literal string.
+3. When developing, call `I18nliner.t("A string to be translated!")`.
 This will pull from the current locale and return the translated string.
+
+#### Pluralization
+`t()` accepts a second signature, where you pass a hashmap with at least the
+following keys: `one`, `plural`, and `count`. If `count == 1`, it will translate the
+`one` string, otherwise it will translate the `plural` string. This allows you to
+write separate constructs for plural values. Here's an example:
+
+```kotlin
+I18nliner.t(hashMapOf(
+  "one" to "There is one light!",
+  "plural" to "There are { count } lights!",
+  "count" to lights.count
+))
+```
 
 ---
 

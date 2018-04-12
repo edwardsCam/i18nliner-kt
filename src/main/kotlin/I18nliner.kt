@@ -44,4 +44,17 @@ object I18nliner {
     }
     return interpret(translatedKeyValue[1], args)
   }
+
+  fun t(args: HashMap<String, Any>): String {
+    args["one"] ?: warn("Pluralization: You need to provide a \"one\" string!")
+    args["plural"] ?: warn("Pluralization: You need to provide a \"plural\" string!")
+    args["count"] ?: warn("Pluralization: You need to provide a \"count\" string!")
+    val singularMsg = args["one"]!!.toString()
+    val pluralMsg = args["plural"]!!.toString()
+    val count = args["count"]!!
+    return t(
+      if (count == 1) singularMsg else pluralMsg,
+      args
+    )
+  }
 }
