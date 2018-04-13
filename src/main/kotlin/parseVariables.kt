@@ -1,12 +1,17 @@
 import java.util.regex.Pattern
 
+private val cache: HashMap<String, MutableSet<String>> = hashMapOf()
+
 fun parseVariables(msg: String): MutableSet<String> {
-  val variables = mutableSetOf<String>()
-  val matcher = Pattern.compile("\\{\\s*(\\w*)\\s*}").matcher(msg)
-  while (matcher.find()) {
-    variables.add(
-      matcher.group(1)
-    )
+  if (cache[msg] == null) {
+    val variables = mutableSetOf<String>()
+    val matcher = Pattern.compile(msgVarPattern()).matcher(msg)
+    while (matcher.find()) {
+      variables.add(
+        matcher.group(1)
+      )
+    }
+    cache[msg] = variables
   }
-  return variables
+  return cache[msg]!!
 }

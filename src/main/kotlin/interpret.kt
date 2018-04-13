@@ -5,7 +5,7 @@ fun interpret(
   parseVariables(msg).fold(msg) { result, variable ->
     if (args.containsKey(variable)) {
       result.replace(
-        regex(variable),
+        msgVarRegex(variable),
         args[variable].toString()
       )
     } else {
@@ -15,4 +15,3 @@ fun interpret(
   }
 )
 
-private fun regex(variable: String): Regex = "\\{\\s*$variable\\s*}".toRegex()
