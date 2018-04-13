@@ -76,82 +76,103 @@ class I18nlinerTest {
   }
 
   @Test
-  fun `pluralization returns the singular message if count is 1`() {
+  fun `pluralization returns the "zero" message if count is 0`() {
     assertEquals(
-      I18nliner.t(
-        hashMapOf(
-          "one" to "There is one light!",
-          "plural" to "There are { count } lights!",
-          "count" to 1
-        )
+      I18nliner.tPlural(
+        0,
+        "There aren't any lights!",
+        "There is one light!",
+        "There are { count } lights!"
+      ),
+      "There aren't any lights!"
+    )
+  }
+
+  @Test
+  fun `pluralization returns the "one" message if count is 1`() {
+    assertEquals(
+      I18nliner.tPlural(
+        1,
+        "There aren't any lights!",
+        "There is one light!",
+        "There are { count } lights!"
       ),
       "There is one light!"
     )
   }
 
   @Test
-  fun `pluralization returns the plural message if count is a number other than 1`() {
+  fun `pluralization returns the "other" message if count is a number other than 1 or 0`() {
     assertEquals(
-      I18nliner.t(
-        hashMapOf(
-          "one" to "There is one light!",
-          "plural" to "There are { count } lights!",
-          "count" to 0
-        )
-      ),
-      "There are 0 lights!"
-    )
-
-    assertEquals(
-      I18nliner.t(
-        hashMapOf(
-          "one" to "There is one light!",
-          "plural" to "There are { count } lights!",
-          "count" to 3.14
-        )
+      I18nliner.tPlural(
+        3.14,
+        "There aren't any lights!",
+        "There is one light!",
+        "There are { count } lights!"
       ),
       "There are 3.14 lights!"
     )
 
     assertEquals(
-      I18nliner.t(
-        hashMapOf(
-          "one" to "There is one light!",
-          "plural" to "There are { count } lights!",
-          "count" to -999
-        )
+      I18nliner.tPlural(
+        -999,
+        "There aren't any lights!",
+        "There is one light!",
+        "There are { count } lights!"
       ),
       "There are -999 lights!"
     )
   }
 
-  @Test(expected = NullPointerException::class)
-  fun `pluralization requires a "one" property`() {
-    I18nliner.t(
-      hashMapOf(
-        "plural" to "asdf",
-        "count" to 42
-      )
+  @Test
+  fun `pluralization allows other args`() {
+    assertEquals(
+      I18nliner.tPlural(
+        0,
+        "There aren't any lights! But there is a { object }.",
+        "There is one light!",
+        "There are { count } lights!",
+        hashMapOf("object" to "flashlight")
+      ),
+      "There aren't any lights! But there is a flashlight."
+    )
+
+    assertEquals(
+      I18nliner.tPlural(
+        1,
+        "There aren't any lights!",
+        "There is one light! We don't need the { object }.",
+        "There are { count } lights!",
+        hashMapOf("object" to "flashlight")
+      ),
+      "There is one light! We don't need the flashlight."
+    )
+
+    assertEquals(
+      I18nliner.tPlural(
+        3.14,
+        "There aren't any lights!",
+        "There is one light!",
+        "There are { count } lights! We don't need the { object }.",
+        hashMapOf("object" to "flashlight")
+      ),
+      "There are 3.14 lights! We don't need the flashlight."
     )
   }
 
-  @Test(expected = NullPointerException::class)
-  fun `pluralization requires a "plural" property`() {
-    I18nliner.t(
-      hashMapOf(
-        "one" to "asdf",
-        "count" to 42
-      )
-    )
-  }
-
-  @Test(expected = NullPointerException::class)
-  fun `pluralization requires a "count" property`() {
-    I18nliner.t(
-      hashMapOf<String, Any>(
-        "one" to "asdf",
-        "plural" to "wat"
-      )
+  @Test
+  fun `pluralization allows you to pass an override locale`() {
+    I18nliner.setLocale("en_US")
+    assertEquals(
+      I18nliner.tPlural(
+        3.14,
+        "There aren't any lights!",
+        "There is one light!",
+        "There are { count } lights! We don't need the { object }.",
+        hashMapOf("object" to I18nliner.t("flashlight", locale = "pt_BR")),
+        locale = "pt_BR"
+      ),
+      "Existem 3.14 luzes! Nós não precisamos da lanterna."
     )
   }
 
@@ -159,7 +180,7 @@ class I18nlinerTest {
   fun `allows you to pass an override locale`() {
     I18nliner.setLocale("en_US")
     assertEquals(
-      I18nliner.t("I am only but a test!", "pt_BR"),
+      I18nliner.t("I am only but a test!", locale = "pt_BR"),
       "Eu sou apenas um teste!"
     )
     assertEquals(

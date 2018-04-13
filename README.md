@@ -11,6 +11,7 @@ No more manual management of your english translation file
 * Use human language strings in your code - no more referencing
 internationalized strings by their key in the translation file.
 * Support for pluralization constructs.
+* (Coming soon!) Support for gender constructs.
 * (Coming soon!) Support for variable formats (date, number, currency, etc).
 
 ---
@@ -31,17 +32,20 @@ This will pull from the current locale and return the translated string.
     via `setLocale()` for that call only.
 
 #### Pluralization
-`t()` accepts a second signature, where you pass a hashmap with at least the
-following keys: `one`, `plural`, and `count`. If `count == 1`, it will translate the
-`one` string, otherwise it will translate the `plural` string. This allows you to
-write separate constructs for plural values. Here's an example:
+There is a method `tPlural()`, which accepts a `count` number, and strings for
+`zero`, `one`, and `other`.
+If `count == 0`, it will translate the `zero` string,
+if `1` the `one` string, otherwise it will translate the `other` string.
+This allows you to translate sentences that have completely different structures
+based on pluralization. Here's an example:
 
 ```kotlin
-I18nliner.t(hashMapOf(
-  "one" to "There is one light!",
-  "plural" to "There are { count } lights!",
-  "count" to lights.count
-))
+I18nliner.tPlural(
+  count = lights.count(),
+  zero = "There aren't any lights!",
+  one = "There is one light!",
+  other = "There are { count } lights!"
+)
 ```
 
 ---
@@ -79,14 +83,14 @@ one sentence. It's generally better to translate ( A + B + C ).
 
 ```kotlin
 // bad, static analysis has a hard time making a sentence out of this
-I18nliner.t("Your exam is due on " + I18nliner.t("Tuesday"))
+I18nliner.t("Your essay is due on " + I18nliner.t("Tuesday"))
 ```
 
 ```kotlin
 // correct, one sentence with interpolated variables.
 // your translators can see the entire logic of the sentence.
 I18nliner.t(
-  "Your exam is due on { dueDate }",
+  "Your essay is due on { dueDate }",
   hashMapOf("dueDate" to I18nliner.t("Tuesday"))
 )
 ```

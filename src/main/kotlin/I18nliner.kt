@@ -33,18 +33,23 @@ object I18nliner {
     return interpret(translation, args)
   }
 
-  fun t(args: HashMap<String, Any>): String {
-    args["one"] ?: warn("Pluralization: You need to provide a \"one\" string!")
-    args["plural"] ?: warn("Pluralization: You need to provide a \"plural\" string!")
-    args["count"] ?: warn("Pluralization: You need to provide a \"count\" string!")
-    val singularMsg = args["one"]!!.toString()
-    val pluralMsg = args["plural"]!!.toString()
-    val count = args["count"]!!
+  fun tPlural(
+    count: Number,
+    zero: String?,
+    one: String?,
+    other: String?,
+    args: HashMap<String, Any> = hashMapOf(),
+    locale: String = _locale
+  ): String {
+    args["count"] = count
     return t(
-      if (count == 1) singularMsg else pluralMsg,
-      args
+      when (count) {
+        0 -> zero!!
+        1 -> one!!
+        else -> other!!
+      },
+      args,
+      locale
     )
   }
-
-  fun t(msg: String, locale: String): String = t(msg, hashMapOf(), locale)
 }
