@@ -161,6 +161,59 @@ class I18nlinerTest {
   }
 
   @Test
+  fun `gender translates the male sentence`() {
+    assertEquals(
+      I18nliner.tGender(
+        "male",
+        "his towel",
+        "her towel",
+        "their towel"
+      ),
+      "his towel"
+    )
+  }
+
+  @Test
+  fun `gender translates the female sentence`() {
+    assertEquals(
+      I18nliner.tGender(
+        "female",
+        "his towel",
+        "her towel",
+        "their towel"
+      ),
+      "her towel"
+    )
+  }
+
+  @Test
+  fun `gender translates the other sentence`() {
+    assertEquals(
+      I18nliner.tGender(
+        "other",
+        "his towel",
+        "her towel",
+        "their towel"
+      ),
+      "their towel"
+    )
+  }
+
+  @Test
+  fun `gender allows other args`() {
+    assertEquals(
+      I18nliner.tGender(
+        "male",
+        "There aren't any lights! But there is a { object }.",
+        "There is one light!",
+        "There are { count } lights!",
+        hashMapOf("object" to "flashlight")
+      ),
+      "There aren't any lights! But there is a flashlight."
+    )
+  }
+
+  @Test
   fun `pluralization allows you to pass an override locale`() {
     I18nliner.setLocale("en_US")
     assertEquals(
@@ -173,6 +226,25 @@ class I18nlinerTest {
         locale = "pt_BR"
       ),
       "Existem 3.14 luzes! Nós não precisamos da lanterna."
+    )
+  }
+
+  @Test
+  fun `gender allows you to pass an override locale`() {
+    I18nliner.setLocale("en_US")
+    assertEquals(
+      I18nliner.tGender(
+        "other",
+        "There aren't any lights!",
+        "There is one light!",
+        "There are { count } lights! We don't need the { object }.",
+        hashMapOf<String, Any>(
+          "object" to I18nliner.t("flashlight", locale = "pt_BR"),
+          "count" to 42
+        ),
+        "pt_BR"
+      ),
+      "Existem 42 luzes! Nós não precisamos da lanterna."
     )
   }
 

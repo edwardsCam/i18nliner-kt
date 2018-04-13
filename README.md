@@ -11,7 +11,7 @@ No more manual management of your english translation file
 * Use human language strings in your code - no more referencing
 internationalized strings by their key in the translation file.
 * Support for pluralization constructs.
-* (Coming soon!) Support for gender constructs.
+* Support for gender constructs.
 * (Coming soon!) Support for variable formats (date, number, currency, etc).
 
 ---
@@ -32,8 +32,8 @@ This will pull from the current locale and return the translated string.
     via `setLocale()` for that call only.
 
 #### Pluralization
-There is a method `tPlural()`, which accepts a `count` number, and strings for
-`zero`, `one`, and `other`.
+There is a method `tPlural()`, which accepts a required `count` number,
+and strings for `zero`, `one`, and `other`.
 If `count == 0`, it will translate the `zero` string,
 if `1` the `one` string, otherwise it will translate the `other` string.
 This allows you to translate sentences that have completely different structures
@@ -45,6 +45,23 @@ I18nliner.tPlural(
   zero = "There aren't any lights!",
   one = "There is one light!",
   other = "There are { count } lights!"
+)
+```
+
+#### Gender
+I18nliner allows you to specify different sentences for gendered constructs via
+`tGender()`, which accepts a required `gender` string, and strings for `male`,
+`female`, and `other`.
+
+`gender` can be `"male"`/`"m"`, or `"female"`/`"f"`. Anything else and it will hit
+the `other` string.
+
+```kotlin
+I18nliner.tGender(
+  user.getGender(),
+  male = "This is his towel.",
+  female = "This is her towel.",
+  other = "This is their towel."
 )
 ```
 

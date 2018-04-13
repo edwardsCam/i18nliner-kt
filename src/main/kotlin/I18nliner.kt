@@ -52,4 +52,23 @@ object I18nliner {
       locale
     )
   }
+
+  fun tGender(
+    gender: String,
+    male: String?,
+    female: String?,
+    other: String?,
+    args: HashMap<String, Any> = hashMapOf(),
+    locale: String = _locale
+  ): String = (
+    t(
+      when (gender.toLowerCase()) {
+        "m", "male" -> male!!
+        "f", "female" -> female!!
+        else -> other!!
+      },
+      args,
+      locale
+    )
+  )
 }
