@@ -26,6 +26,9 @@ knows where to find your translations.
     subsequent calls to `t()` will reflect the correct language.
 3. When developing, call `I18nliner.t("A string to be translated!")`.
 This will pull from the current locale and return the translated string.
+    (Note: You can also define an override locale on each call, via the signature
+    `I18nliner.t("My string", locale = "pt_BR")`. This will ignore the locale you set
+    via `setLocale()` for that call only.
 
 #### Pluralization
 `t()` accepts a second signature, where you pass a hashmap with at least the

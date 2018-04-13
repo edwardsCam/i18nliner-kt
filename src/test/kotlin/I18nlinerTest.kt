@@ -66,7 +66,7 @@ class I18nlinerTest {
     assertEquals(
       I18nliner.t(
         "The name is { lastName }. { firstName } { lastName }.",
-        hashMapOf(
+        hashMapOf<String, Any>(
           "firstName" to I18nliner.t("James"),
           "lastName" to "Bond"
         )
@@ -152,6 +152,19 @@ class I18nlinerTest {
         "one" to "asdf",
         "plural" to "wat"
       )
+    )
+  }
+
+  @Test
+  fun `allows you to pass an override locale`() {
+    I18nliner.setLocale("en_US")
+    assertEquals(
+      I18nliner.t("I am only but a test!", "pt_BR"),
+      "Eu sou apenas um teste!"
+    )
+    assertEquals(
+      I18nliner.t("There are { count } lights!", hashMapOf("count" to 42), "pt_BR"),
+      "Há 42 luzes!"
     )
   }
 }

@@ -15,14 +15,15 @@ object I18nliner {
 
   fun t(
     msg: String,
-    args: HashMap<String, Any> = hashMapOf()
+    args: HashMap<String, Any> = hashMapOf(),
+    locale: String = _locale
   ): String {
     if (_path.isEmpty()) {
       warn("Translation file not found! You may need to call setPath to set the location of your translation files.")
       return msg
     }
 
-    val translations = getTranslations(_path, _locale) ?: return msg
+    val translations = getTranslations(_path, locale) ?: return msg
     val key = generateKey(msg)
     val translation = translations[key]
     if (translation == null) {
@@ -44,4 +45,6 @@ object I18nliner {
       args
     )
   }
+
+  fun t(msg: String, locale: String): String = t(msg, hashMapOf(), locale)
 }
