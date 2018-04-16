@@ -1,6 +1,7 @@
 object I18nliner {
   private var _path = ""
   private var _locale = "en_US"
+  private var _warn_missing_translations = false
 
   fun setPath(path: String) {
     _path = path
@@ -8,6 +9,10 @@ object I18nliner {
 
   fun setLocale(locale: String) {
     _locale = locale
+  }
+
+  fun warnOnMissingTranslations(warning: Boolean) {
+    _warn_missing_translations = warning
   }
 
   fun getPath(): String = _path
@@ -27,7 +32,9 @@ object I18nliner {
     val key = generateKey(msg)
     val translation = translations[key]
     if (translation == null) {
-      warn("Did not find a translation for \"$msg\"! (key: $key)")
+      if (_warn_missing_translations) {
+        warn("Did not find a translation for \"$msg\"! (key: $key)")
+      }
       return msg
     }
     return interpret(translation, args)
